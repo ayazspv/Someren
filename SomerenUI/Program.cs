@@ -16,9 +16,5 @@ namespace SomerenUI
             ApplicationConfiguration.Initialize();
             Application.Run(new SomerenUI());
         }
-        static void Start()
-        {
-
-        }
     }
 }
