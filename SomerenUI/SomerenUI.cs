@@ -48,16 +48,35 @@ namespace SomerenUI
             List<Student> students = studentService.GetStudents();
             return students;
         }
-
         private void DisplayStudents(List<Student> students)
         {
-            // clear the listview before filling it
-            listViewStudents.Clear();
+            // Clear the listview before filling it
+            listViewStudents.Items.Clear();
+
+            // Configure the ListView to display items vertically
+            listViewStudents.View = View.Details;
+
+            // Add columns for each property
+            listViewStudents.Columns.Clear();
+            listViewStudents.Columns.Add("Student Number", 100);
+            listViewStudents.Columns.Add("First Name", 100);
+            listViewStudents.Columns.Add("Last Name", 100);
+            listViewStudents.Columns.Add("Telephone Number", 100);
+            listViewStudents.Columns.Add("Class", 100);
+            listViewStudents.Columns.Add("Room Number", 100);
 
             foreach (Student student in students)
             {
-                ListViewItem li = new ListViewItem(student.Name);
-                li.Tag = student;   // link student object to listview item
+                ListViewItem li = new ListViewItem(new string[]
+                {
+            student.StudentNumber.ToString(),
+            student.FirstName,
+            student.LastName,
+            student.TelephoneNumber,
+            student.Class,
+            student.RoomNumber.ToString()
+                });
+
                 listViewStudents.Items.Add(li);
             }
         }
@@ -75,6 +94,11 @@ namespace SomerenUI
         private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowStudentsPanel();
+        }
+
+        private void pnlStudents_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
