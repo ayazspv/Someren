@@ -139,7 +139,9 @@ namespace SomerenUI
         private List<Lecturer> GetLecturers()
         {
             LecturerService lecturerService = new LecturerService();
-            return lecturerService.GetLecturers();
+            List<Lecturer> lecturers = lecturerService.GetLecturers();
+            return lecturers;
+            //return lecturerService.GetLecturers();
         }
         private List<Drink> GetDrinks()
         {

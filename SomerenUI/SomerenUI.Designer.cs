@@ -93,14 +93,14 @@
             // dashboardToolStripMenuItem1
             // 
             dashboardToolStripMenuItem1.Name = "dashboardToolStripMenuItem1";
-            dashboardToolStripMenuItem1.Size = new System.Drawing.Size(131, 22);
+            dashboardToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             dashboardToolStripMenuItem1.Text = "Dashboard";
             dashboardToolStripMenuItem1.Click += dashboardToolStripMenuItem1_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -351,9 +351,9 @@
             ClientSize = new System.Drawing.Size(962, 505);
             Controls.Add(menuStrip1);
             Controls.Add(pnlDashboard);
-            Controls.Add(pnlLecturers);
             Controls.Add(pnlStudents);
             Controls.Add(pnlRooms);
+            Controls.Add(pnlLecturers);
             Controls.Add(DrinkSuppliesPnl);
             MainMenuStrip = menuStrip1;
             Name = "SomerenUI";
