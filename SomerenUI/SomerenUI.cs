@@ -118,21 +118,12 @@ namespace SomerenUI
             // Clear the listview before filling it
             listViewRooms.Items.Clear();
 
-        // Method to show the drinks panel
-        private void ShowDrinksPanel()
-        {
-            pnlStudents.Hide();
-            pnlDashboard.Hide();
-            pnlLecturers.Hide();
-            DrinkSuppliesPnl.Show();
-                // Configure the ListView to display items vertically
-                listViewRooms.Columns.Clear();
+            // Configure the ListView to display items vertically
+            listViewRooms.View = View.Details;
 
-
-                // Add columns for each property
-
-                listViewRooms.View = View.Details;
-                listViewRooms.Columns.Add("Room Number", 100);
+            // Add columns for each property
+            listViewRooms.Columns.Clear();
+            listViewRooms.Columns.Add("Room Number", 100);
             listViewRooms.Columns.Add("Room Type", 100);
             listViewRooms.Columns.Add("Floor", 100);
             listViewRooms.Columns.Add("Number of beds", 100);
@@ -180,16 +171,6 @@ namespace SomerenUI
         private void roomsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             ShowRoomsPanel();
-        }
-
-        private void SomerenUI_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblDashboard_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
