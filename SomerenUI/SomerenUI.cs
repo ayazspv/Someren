@@ -22,19 +22,19 @@ namespace SomerenUI
             pnlRooms.Hide();
             pnlStudents.Hide();
             pnlLecturers.Hide();
+            DrinkSuppliesPnl.Hide();
 
 
             // show dashboard
             pnlDashboard.Show();
         }
-
-
         private void ShowStudentsPanel()
         {
             // hide all other panels
             pnlRooms.Hide();
             pnlDashboard.Hide();
             pnlLecturers.Hide();
+            DrinkSuppliesPnl.Hide();
 
             // show students
             pnlStudents.Show();
@@ -59,9 +59,11 @@ namespace SomerenUI
             // hide all other panels
             pnlDashboard.Hide();
             pnlStudents.Hide();
+            pnlLecturers.Hide();
+            DrinkSuppliesPnl.Hide();
 
 
-            // show students
+            // show Rooms
             pnlRooms.Show();
 
             try
@@ -77,6 +79,50 @@ namespace SomerenUI
 
 
         }
+        private void ShowLecturerPanel()
+        {
+            pnlStudents.Hide();
+            pnlDashboard.Hide();
+            pnlRooms.Hide();
+            DrinkSuppliesPnl.Hide();
+
+            pnlLecturers.Show();
+
+            try
+            {
+                // Get the list of lecturers
+                List<Lecturer> lecturers = GetLecturers();
+                // Display the list of lecturers
+                DisplayLecturers(lecturers);
+            }
+            catch (Exception ex)
+            {
+                // Display error message if there's an exception
+                MessageBox.Show("Error loading lecturers: " + ex.Message);
+            }
+        }
+        private void ShowDrinksPanel()
+        {
+            pnlStudents.Hide();
+            pnlDashboard.Hide();
+            pnlLecturers.Hide();
+            pnlRooms.Hide();
+
+            DrinkSuppliesPnl.Show();
+
+            try
+            {
+                // Get the list of drinks
+                List<Drink> drinks = GetDrinks();
+                // Display the list of drinks
+                DisplayDrinks(drinks);
+            }
+            catch (Exception ex)
+            {
+                // Display error message if there's an exception
+                MessageBox.Show("Error loading drinks: " + ex.Message);
+            }
+        }
 
 
         private List<Student> GetStudents()
@@ -90,6 +136,18 @@ namespace SomerenUI
             List<Room> rooms = roomService.GetRooms();
             return rooms;
         }
+        private List<Lecturer> GetLecturers()
+        {
+            LecturerService lecturerService = new LecturerService();
+            return lecturerService.GetLecturers();
+        }
+        private List<Drink> GetDrinks()
+        {
+            DrinkService drinkService = new DrinkService();
+            return drinkService.GetDrinks();
+        }
+
+
         private void DisplayStudents(List<Student> students)
         {
             // Clear the listview before filling it
@@ -150,37 +208,6 @@ namespace SomerenUI
                 listViewRooms.Items.Add(li);
             }
         }
-
-        // Method to show the lecturers panel
-        private void ShowLecturerPanel()
-        {
-            pnlStudents.Hide();
-            pnlDashboard.Hide();
-
-            try
-            {
-                // Get the list of lecturers
-                List<Lecturer> lecturers = GetLecturers();
-                // Display the list of lecturers
-                DisplayLecturers(lecturers);
-            }
-            catch (Exception ex)
-            {
-                // Display error message if there's an exception
-                MessageBox.Show("Error loading lecturers: " + ex.Message);
-            }
-
-            pnlLecturers.Show();
-        }
-
-        // Method to get the list of lecturers from the service
-        private List<Lecturer> GetLecturers()
-        {
-            LecturerService lecturerService = new LecturerService();
-            return lecturerService.GetLecturers();
-        }
-
-        // Method to display the list of lecturers in the ListView
         private void DisplayLecturers(List<Lecturer> lecturers)
         {
             listViewLecturers.Items.Clear();
@@ -208,41 +235,10 @@ namespace SomerenUI
                     lecturer.Age.ToString(),
                     lecturer.RoomNumber.ToString()
                 });
-                li.Tag = lecturer;
+                //li.Tag = lecturer;
                 listViewLecturers.Items.Add(li);
             }
         }
-
-        // Method to show the drinks panel
-        private void ShowDrinksPanel()
-        {
-            pnlStudents.Hide();
-            pnlDashboard.Hide();
-            pnlLecturers.Hide();
-            DrinkSuppliesPnl.Show(); 
-
-            try
-            {
-                // Get the list of drinks
-                List<Drink> drinks = GetDrinks();
-                // Display the list of drinks
-                DisplayDrinks(drinks);
-            }
-            catch (Exception ex)
-            {
-                // Display error message if there's an exception
-                MessageBox.Show("Error loading drinks: " + ex.Message);
-            }
-        }
-
-        // Method to get the list of drinks from the service
-        private List<Drink> GetDrinks()
-        {
-            DrinkService drinkService = new DrinkService();
-            return drinkService.GetDrinks();
-        }
-
-        // Method to display the list of drinks in the ListView
         private void DisplayDrinks(List<Drink> drinks)
         {
             listViewDrinks.Items.Clear(); // Correct method name
@@ -280,7 +276,22 @@ namespace SomerenUI
         {
             ShowDashboardPanel();
         }
-
+        private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowStudentsPanel();
+        }
+        private void drinksSuppliesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowDrinksPanel();
+        }
+        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowLecturerPanel();
+        }
+        private void roomsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowRoomsPanel();
+        }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -289,40 +300,18 @@ namespace SomerenUI
         }
 
 
-        private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowStudentsPanel();
-        }
-        
+
+
         private void pnlStudents_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void roomsToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            ShowRoomsPanel();
-        }
-        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowLecturerPanel();
-        }
-        private void drinksSuppliesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowDrinksPanel();
-        }
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
         }
-        private void listViewDrinks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Code to handle item selection in the drinks ListView, if needed
-        }
+
+
     }
 }
