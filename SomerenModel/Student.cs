@@ -10,10 +10,5 @@ namespace SomerenModel
         public string TelephoneNumber { get; set; } // Changed to string
         public string Class { get; set; }
         public int RoomNumber { get; set; }
-
-        public override string ToString()
-        {
-            return $"{StudentNumber} {FirstName} {LastName} {TelephoneNumber} {Class} {RoomNumber}";
-        }
     }
 }
