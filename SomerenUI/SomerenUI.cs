@@ -129,6 +129,10 @@ namespace SomerenUI
 
 
 
+
+
+
+
         //private List<Drink> GetDrinks()
         //{
         //    DrinkService drinkService = new DrinkService();
@@ -179,6 +183,37 @@ namespace SomerenUI
                 listViewRooms.Items.Add(li);
             }
         }
+        private void DisplayLecturers(List<Lecturer> lecturers)
+        {
+            listViewLecturers.Items.Clear();
+
+            // Set ListView to display in details view
+            listViewLecturers.View = View.Details;
+
+            // Add columns to the ListView
+            listViewLecturers.Columns.Clear();
+            listViewLecturers.Columns.Add("Lecturer Number", 100);
+            listViewLecturers.Columns.Add("First Name", 100);
+            listViewLecturers.Columns.Add("Last Name", 100);
+            listViewLecturers.Columns.Add("Telephone", 100);
+            listViewLecturers.Columns.Add("Age", 100);
+            listViewLecturers.Columns.Add("Room Number", 100);
+
+            // Populate the ListView with lecturers
+            foreach (Lecturer lecturer in lecturers)
+            {
+                ListViewItem li = new ListViewItem(new string[] {
+                    lecturer.LecturerNumber.ToString(),
+                    lecturer.FirstName,
+                    lecturer.LastName,
+                    lecturer.Telephone,
+                    lecturer.Age.ToString(),
+                    lecturer.RoomNumber.ToString()
+                });
+                li.Tag = lecturer;
+                listViewLecturers.Items.Add(li);
+            }
+        }
         private void DisplayDrinks(List<Drink> drinks)
         {
             // Clear the listview before filling it
@@ -190,6 +225,7 @@ namespace SomerenUI
             // Populate the listview with drink data
             PopulateDrinks(drinks);
         }
+
 
 
         private void dashboardToolStripMenuItem1_Click(object sender, System.EventArgs e)
@@ -206,7 +242,7 @@ namespace SomerenUI
         }
         private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ShowLecturersPanel();
         }
         private void orderADrinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -343,7 +379,7 @@ namespace SomerenUI
                 listViewSelectStudent.Items.Add(item);
             }
         }
-        
+
 
         private void pnlStudents_Paint(object sender, PaintEventArgs e)
         {
@@ -356,7 +392,7 @@ namespace SomerenUI
 
         }
 
-        
+
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -520,6 +556,6 @@ namespace SomerenUI
 
 
 
-        
+
     }
 }

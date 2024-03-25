@@ -63,7 +63,7 @@
             label2 = new System.Windows.Forms.Label();
             pnlLecturers = new System.Windows.Forms.Panel();
             pictureBox3 = new System.Windows.Forms.PictureBox();
-            listViewLecturer = new System.Windows.Forms.ListView();
+            listViewLecturers = new System.Windows.Forms.ListView();
             label3 = new System.Windows.Forms.Label();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
@@ -361,7 +361,7 @@
             // pnlLecturers
             // 
             pnlLecturers.Controls.Add(pictureBox3);
-            pnlLecturers.Controls.Add(listViewLecturer);
+            pnlLecturers.Controls.Add(listViewLecturers);
             pnlLecturers.Controls.Add(label3);
             pnlLecturers.Location = new System.Drawing.Point(12, 27);
             pnlLecturers.Name = "pnlLecturers";
@@ -377,13 +377,13 @@
             pictureBox3.TabIndex = 2;
             pictureBox3.TabStop = false;
             // 
-            // listViewLecturer
+            // listViewLecturers
             // 
-            listViewLecturer.Location = new System.Drawing.Point(16, 42);
-            listViewLecturer.Name = "listViewLecturer";
-            listViewLecturer.Size = new System.Drawing.Size(766, 307);
-            listViewLecturer.TabIndex = 1;
-            listViewLecturer.UseCompatibleStateImageBehavior = false;
+            listViewLecturers.Location = new System.Drawing.Point(16, 42);
+            listViewLecturers.Name = "listViewLecturers";
+            listViewLecturers.Size = new System.Drawing.Size(766, 307);
+            listViewLecturers.TabIndex = 1;
+            listViewLecturers.UseCompatibleStateImageBehavior = false;
             // 
             // label3
             // 
@@ -465,7 +465,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel pnlLecturers;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.ListView listViewLecturer;
+        private System.Windows.Forms.ListView listViewLecturers;
         private System.Windows.Forms.Label label3;
         //private System.Windows.Forms.Label label2;
 
