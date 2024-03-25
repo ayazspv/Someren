@@ -357,19 +357,19 @@
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label2.Location = new System.Drawing.Point(13, 7);
-            label2.Name = "label2";
+            //label2.AutoSize = true;
+            //label2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            //label2.Location = new System.Drawing.Point(13, 7);
+            //label2.Name = "label2";
 
-            label2.Size = new System.Drawing.Size(155, 32);
-            label2.TabIndex = 0;
-            label2.Text = "Order a drink";
-            label2.Click += label2_Click;
+            //label2.Size = new System.Drawing.Size(155, 32);
+            //label2.TabIndex = 0;
+            //label2.Text = "Order a drink";
+            //label2.Click += label2_Click;
 
-            label2.Size = new System.Drawing.Size(107, 32);
-            label2.TabIndex = 0;
-            label2.Text = "Students";
+            //label2.Size = new System.Drawing.Size(107, 32);
+            //label2.TabIndex = 0;
+            //label2.Text = "Students";
 
             // 
             // SomerenUI
@@ -401,7 +401,7 @@
             pnlRooms.ResumeLayout(false);
             pnlRooms.PerformLayout();
 
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            //((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -441,9 +441,9 @@
         private System.Windows.Forms.ToolStripMenuItem drinkSuppliesToolStripMenuItem;
 
         private System.Windows.Forms.Panel pnlRooms;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        //private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.ListView listViewRooms;
-        private System.Windows.Forms.Label label2;
+        //private System.Windows.Forms.Label label2;
 
     }
 }

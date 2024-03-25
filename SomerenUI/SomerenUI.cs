@@ -20,21 +20,18 @@ namespace SomerenUI
             // hide all other panels
             pnlRooms.Hide();
             pnlStudents.Hide();
-            pnlLecturers.Hide();
-            DrinkSuppliesPnl.Hide();
+            pnlOrderDrink.Hide();
 
 
             // show dashboard
             pnlDashboard.Show();
         }
-
         private void ShowStudentsPanel()
         {
             // hide all other panels
             pnlRooms.Hide();
             pnlDashboard.Hide();
-            pnlLecturers.Hide();
-            DrinkSuppliesPnl.Hide();
+            pnlOrderDrink.Hide();
 
 
             // show students
@@ -60,11 +57,9 @@ namespace SomerenUI
             // hide all other panels
             pnlDashboard.Hide();
             pnlStudents.Hide();
-            pnlLecturers.Hide();
-            DrinkSuppliesPnl.Hide();
 
 
-            // show Rooms
+            // show students
             pnlRooms.Show();
 
             try
@@ -80,48 +75,28 @@ namespace SomerenUI
 
 
         }
-        private void ShowLecturerPanel()
-        {
-            pnlStudents.Hide();
-            pnlDashboard.Hide();
-            pnlRooms.Hide();
-            DrinkSuppliesPnl.Hide();
-
-            pnlLecturers.Show();
-
-            try
-            {
-                // Get the list of lecturers
-                List<Lecturer> lecturers = GetLecturers();
-                // Display the list of lecturers
-                DisplayLecturers(lecturers);
-            }
-            catch (Exception ex)
-            {
-                // Display error message if there's an exception
-                MessageBox.Show("Error loading lecturers: " + ex.Message);
-            }
-        }
         private void ShowDrinksPanel()
         {
-            pnlStudents.Hide();
+            // Hide all other panels
             pnlDashboard.Hide();
-            pnlLecturers.Hide();
-            pnlRooms.Hide();
+            pnlStudents.Hide();
 
-            DrinkSuppliesPnl.Show();
+            // Show drinks panel
+            pnlOrderDrink.Show();
 
             try
             {
-                // Get the list of drinks
-                List<Drink> drinks = GetDrinks();
-                // Display the list of drinks
-                DisplayDrinks(drinks);
+                // Get and display all drinks
+                //List<Drink> drinks = GetDrinks();
+                //DisplayDrinks(drinks);
+
+                // Get and display all students for ordering drinks
+                List<Student> students = GetStudents();
+                DisplayStudentsForOrderPanel(students);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                // Display error message if there's an exception
-                MessageBox.Show("Error loading drinks: " + ex.Message);
+                MessageBox.Show("Something went wrong while loading the drinks or students: " + e.Message);
             }
         }
 
@@ -138,11 +113,13 @@ namespace SomerenUI
             List<Room> rooms = roomService.GetRooms();
             return rooms;
         }
-        private List<Lecturer> GetLecturers()
-        {
-            LecturerService lecturerService = new LecturerService();
-            return lecturerService.GetLecturers();
-        }
+        //private List<Lecturer> GetLecturers()
+        //{
+            //LecturerService lecturerService = new LecturerService();
+            //List<Lecturer> lecturers = lecturerService.GetLecturers();
+            //return lecturers;
+            //return lecturerService.GetLecturers();
+        //}
         private List<Drink> GetDrinks()
         {
             DrinkService drinkService = new DrinkService();
@@ -159,46 +136,10 @@ namespace SomerenUI
             listViewStudents.View = View.Details;
 
             // Add columns for each property
-            listViewStudents.Columns.Clear();
-            listViewStudents.Columns.Add("Student Number", 100);
-            listViewStudents.Columns.Add("First Name", 100);
-            listViewStudents.Columns.Add("Last Name", 100);
-            listViewStudents.Columns.Add("Telephone Number", 100);
-            listViewStudents.Columns.Add("Class", 100);
-            listViewStudents.Columns.Add("Room Number", 100);
+            AddStudentColumns();
 
             // Populate the listview with student data
             PopulateStudents(students);
-        }
-
-        private void AddStudentColumns()
-        {
-            listViewStudents.Columns.Clear();
-            listViewStudents.Columns.AddRange(new[]
-            {
-                new ColumnHeader { Text = "Student Number", Width = 100 },
-                new ColumnHeader { Text = "First Name", Width = 100 },
-                new ColumnHeader { Text = "Last Name", Width = 100 },
-                new ColumnHeader { Text = "Telephone Number", Width = 100 },
-                new ColumnHeader { Text = "Class", Width = 100 },
-                new ColumnHeader { Text = "Room Number", Width = 100 }});
-        }
-        private void PopulateStudents(List<Student> students)
-        {
-            foreach (Student student in students)
-            {
-                ListViewItem li = new ListViewItem(new string[]
-                {
-                    student.StudentNumber.ToString(),
-                    student.FirstName,
-                    student.LastName,
-                    student.TelephoneNumber,
-                    student.Class,
-                    student.RoomNumber.ToString()
-                });
-
-                listViewStudents.Items.Add(li);
-            }
         }
         private void DisplayRooms(List<Room> rooms)
         {
@@ -229,7 +170,6 @@ namespace SomerenUI
                 listViewRooms.Items.Add(li);
             }
         }
-
         private void DisplayDrinks(List<Drink> drinks)
         {
             // Clear the listview before filling it
@@ -238,14 +178,51 @@ namespace SomerenUI
             // Configure the ListView to display items in a list format
             SetupDrinkListView();
 
-            // Add columns to the ListView
-            listViewLecturers.Columns.Clear();
-            listViewLecturers.Columns.Add("Lecturer Number", 100);
-            listViewLecturers.Columns.Add("First Name", 100);
-            listViewLecturers.Columns.Add("Last Name", 100);
-            listViewLecturers.Columns.Add("Telephone", 100);
-            listViewLecturers.Columns.Add("Age", 100);
-            listViewLecturers.Columns.Add("Room Number", 100);
+            // Populate the listview with drink data
+            PopulateDrinks(drinks);
+        }
+
+
+        //private List<Drink> GetDrinks()
+        //{
+        //    DrinkService drinkService = new DrinkService();
+        //    List<Drink> drinks = drinkService.GetDrink();
+        //    return drinks;
+        //}
+
+
+        private void AddStudentColumns()
+        {
+            listViewStudents.Columns.Clear();
+            listViewStudents.Columns.AddRange(new[]
+            {
+                new ColumnHeader { Text = "Student Number", Width = 100 },
+                new ColumnHeader { Text = "First Name", Width = 100 },
+                new ColumnHeader { Text = "Last Name", Width = 100 },
+                new ColumnHeader { Text = "Telephone Number", Width = 100 },
+                new ColumnHeader { Text = "Class", Width = 100 },
+                new ColumnHeader { Text = "Room Number", Width = 100 }});
+        }
+        private void PopulateStudents(List<Student> students)
+        {
+            foreach (Student student in students)
+            {
+                ListViewItem li = new ListViewItem(new string[]
+                {
+                    student.StudentNumber.ToString(),
+                    student.FirstName,
+                    student.LastName,
+                    student.TelephoneNumber,
+                    student.Class,
+                    student.RoomNumber.ToString()
+                });
+
+                listViewStudents.Items.Add(li);
+            }
+        }
+
+
+
 
         private void SetupDrinkListView()
         {
@@ -268,7 +245,7 @@ namespace SomerenUI
             foreach (Drink drink in drinks)
             {
                 ListViewItem item = new ListViewItem(drink.DrinkNumber.ToString());
-                item.SubItems.Add(drink.Name);
+                //item.SubItems.Add(drink.Name);
                 item.SubItems.Add(drink.IsAlcoholic.ToString());
                 item.SubItems.Add(drink.Price.ToString("�0.00"));
                 item.SubItems.Add(drink.Stock.ToString());
@@ -276,43 +253,19 @@ namespace SomerenUI
             }
         }
 
-        private List<Drink> GetDrinks()
+
+
+
+        private void listViewSelectDrink_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DrinkService drinkService = new DrinkService();
-            List<Drink> drinks = drinkService.GetDrink();
-            return drinks;
-        }
-        private void ShowDrinksPanel()
-        {
-            // Hide all other panels
-            pnlDashboard.Hide();
-            pnlStudents.Hide();
-
-            // Show drinks panel
-            pnlOrderDrink.Show();
-
-            // Add columns to the ListView
-            listViewDrinks.Columns.Clear();
-            listViewDrinks.Columns.Add("Drink Number", 100);
-            listViewDrinks.Columns.Add("Name", 100);
-            listViewDrinks.Columns.Add("VAT", 100);
-            listViewDrinks.Columns.Add("Is_Alcoholic", 100); // Correct column name
-            listViewDrinks.Columns.Add("Price", 100);
-            listViewDrinks.Columns.Add("Stock", 100);
-
-            // Populate the ListView with drinks
-            foreach (Drink drink in drinks)
+            if (listViewSelectDrink.SelectedItems.Count > 0)
             {
-                ListViewItem li = new ListViewItem(new string[] {
-                    drink.DrinkNumber.ToString(),
-                    drink.DrinkName,
-                    drink.VAT.ToString(),
-                    drink.IsAlcoholic ? "Yes" : "No",
-                    drink.Price.ToString(),
-                    drink.Stock.ToString()
-                });
-                li.Tag = drink;
-                listViewDrinks.Items.Add(li);
+                // Get the selected item
+                ListViewItem selectedItem = listViewSelectDrink.SelectedItems[0];
+
+                // Get the text of the second subitem (index 1) which contains the drink name
+                string selectedDrinkName = selectedItem.SubItems[1].Text;
+                lblSelectedDrink.Text = "Selected Drink: " + selectedDrinkName;
             }
         }
         private void DisplayStudentsForOrderPanel(List<Student> students)
@@ -477,7 +430,7 @@ namespace SomerenUI
             {
                 updatedStock = 0; // Ensure stock does not go below 0
             }
-            drinkService.UpdateDrinkStock(selectedDrinkNumber, updatedStock);
+            //drinkService.UpdateDrinkStock(selectedDrinkNumber, updatedStock);
 
             MessageBox.Show("Order placed successfully!");
             RefreshDrinkOrderPanel();
@@ -533,7 +486,7 @@ namespace SomerenUI
         private void manageToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-
+        }
 
         private void roomsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
