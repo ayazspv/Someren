@@ -16,7 +16,9 @@ namespace SomerenUI
         private void ShowDashboardPanel()
         {
             // hide all other panels
+            pnlRooms.Hide();
             pnlStudents.Hide();
+
 
             // show dashboard
             pnlDashboard.Show();
@@ -25,7 +27,9 @@ namespace SomerenUI
         private void ShowStudentsPanel()
         {
             // hide all other panels
+            pnlRooms.Hide();
             pnlDashboard.Hide();
+
 
             // show students
             pnlStudents.Show();
@@ -41,12 +45,41 @@ namespace SomerenUI
                 MessageBox.Show("Something went wrong while loading the students: " + e.Message);
             }
         }
+        private void ShowRoomsPanel()
+        {
+            // hide all other panels
+            pnlDashboard.Hide();
+            pnlStudents.Hide();
+
+
+            // show students
+            pnlRooms.Show();
+
+            try
+            {
+                // get and display all students
+                List<Room> rooms = GetRooms();
+                DisplayRooms(rooms);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while loading the rooms: " + e.Message);
+            }
+
+
+        }
 
         private List<Student> GetStudents()
         {
             StudentService studentService = new StudentService();
             List<Student> students = studentService.GetStudents();
             return students;
+        }
+        private List<Room> GetRooms()
+        {
+            RoomService roomService = new RoomService();
+            List<Room> rooms = roomService.GetRooms();
+            return rooms;
         }
         private void DisplayStudents(List<Student> students)
         {
@@ -80,6 +113,35 @@ namespace SomerenUI
                 listViewStudents.Items.Add(li);
             }
         }
+        private void DisplayRooms(List<Room> rooms)
+        {
+            // Clear the listview before filling it
+            listViewRooms.Items.Clear();
+
+            // Configure the ListView to display items vertically
+            listViewRooms.View = View.Details;
+
+            // Add columns for each property
+            listViewRooms.Columns.Clear();
+            listViewRooms.Columns.Add("Room Number", 100);
+            listViewRooms.Columns.Add("Room Type", 100);
+            listViewRooms.Columns.Add("Floor", 100);
+            listViewRooms.Columns.Add("Number of beds", 100);
+
+            foreach (Room room in rooms)
+            {
+                ListViewItem li = new ListViewItem(new string[]
+                {
+            room.RoomNumber.ToString(),
+            room.RoomType,
+            room.Floor.ToString(),
+            room.NumberOfBeds.ToString(),
+
+                });
+
+                listViewRooms.Items.Add(li);
+            }
+        }
 
         private void dashboardToolStripMenuItem1_Click(object sender, System.EventArgs e)
         {
@@ -99,6 +161,16 @@ namespace SomerenUI
         private void pnlStudents_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void roomsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ShowRoomsPanel();
         }
     }
 }
