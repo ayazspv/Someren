@@ -106,6 +106,30 @@ namespace SomerenUI
                 MessageBox.Show("Something went wrong while loading the drinks or students: " + e.Message);
             }
         }
+        private void ShowLecturerPanel()
+        {
+            pnlStudents.Hide();
+            pnlDashboard.Hide();
+            pnlRooms.Hide();
+            pnlOrderDrink.Hide();
+
+            pnlLecturers.Show();
+
+            try
+            {
+                // Get the list of lecturers
+                List<Lecturer> lecturers = GetLecturers();
+                // Display the list of lecturers
+                DisplayLecturers(lecturers);
+            }
+            catch (Exception ex)
+            {
+                // Display error message if there's an exception
+                MessageBox.Show("Error loading lecturers: " + ex.Message);
+            }
+
+            
+        }
 
 
         private List<Student> GetStudents()
@@ -242,7 +266,7 @@ namespace SomerenUI
         }
         private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowLecturersPanel();
+            ShowLecturerPanel();
         }
         private void orderADrinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
