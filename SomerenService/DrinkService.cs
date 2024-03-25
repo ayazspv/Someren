@@ -10,17 +10,30 @@ namespace SomerenService
 {
     public class DrinkService
     {
-        public DrinkDao Drinkdb;
+        private DrinkDao drinkdb;
 
         public DrinkService()
         {
-            Drinkdb = new DrinkDao();
+            drinkdb = new DrinkDao();
         }
-
-        public List<Drink> GetDrinks()
+        public List<Drink> GetDrink()
         {
-            List<Drink> drinks = Drinkdb.GetAllDrinks();
+            List<Drink> drinks = drinkdb.GetAllDrinks();
             return drinks;
+        }
+        // Method to update the stock of a drink
+        public void UpdateDrinkStock(int drinkNumber, int newStock)
+        {
+            try
+            {
+                // Call the appropriate method from the DrinkDao to update the stock
+                drinkdb.UpdateDrinkStock(drinkNumber, newStock);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating drink stock: " + ex.Message);
+                throw;
+            }
         }
     }
 }
