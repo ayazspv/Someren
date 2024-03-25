@@ -6,8 +6,6 @@ using SomerenModel;
 namespace SomerenDAL
 {
     public class StudentDao : BaseDao
-
-
     {
         public List<Student> GetAllStudents()
         {
