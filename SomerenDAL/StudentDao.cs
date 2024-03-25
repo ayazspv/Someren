@@ -6,10 +6,12 @@ using SomerenModel;
 namespace SomerenDAL
 {
     public class StudentDao : BaseDao
+
+
     {
         public List<Student> GetAllStudents()
         {
-            string query = "SELECT StudentId, Name FROM [TABLE]";
+            string query = "SELECT StudentId, Name FROM student";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }

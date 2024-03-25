@@ -12,11 +12,9 @@ namespace SomerenDAL
 
         public BaseDao()
         {
-            // DO NOT FORGET TO INSERT YOUR CONNECTION STRING NAMED 'SOMEREN DATABASE' IN YOUR APP.CONFIG!!
-            /*
-                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SomerenDatabase"].ConnectionString);
-                adapter = new SqlDataAdapter();
-             */
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SomerenDatabase"].ConnectionString);
+            adapter = new SqlDataAdapter();
+
         }
 
         protected SqlConnection OpenConnection()
@@ -87,22 +85,23 @@ namespace SomerenDAL
             }
         }
 
-        /* For Select Queries */
         protected DataTable ExecuteSelectQuery(string query, params SqlParameter[] sqlParameters)
         {
             SqlCommand command = new SqlCommand();
-            DataTable dataTable;
+            DataTable dataTable = new DataTable();
             DataSet dataSet = new DataSet();
 
             try
             {
-                command.Connection = OpenConnection();
-                command.CommandText = query;
-                command.Parameters.AddRange(sqlParameters);
-                command.ExecuteNonQuery();
-                adapter.SelectCommand = command;
-                adapter.Fill(dataSet);
-                dataTable = dataSet.Tables[0];
+                using (SqlConnection connection = OpenConnection())
+                {
+                    command.Connection = connection;
+                    command.CommandText = query;
+                    command.Parameters.AddRange(sqlParameters);
+                    adapter.SelectCommand = command;
+                    adapter.Fill(dataSet);
+                    dataTable = dataSet.Tables[0];
+                }
             }
             catch (SqlException e)
             {
@@ -111,7 +110,7 @@ namespace SomerenDAL
             }
             finally
             {
-                CloseConnection();
+                CloseConnection(); // Close the connection in the finally block
             }
 
             return dataTable;
