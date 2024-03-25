@@ -46,6 +46,7 @@
             pictureBox1 = new System.Windows.Forms.PictureBox();
             listViewStudents = new System.Windows.Forms.ListView();
             label1 = new System.Windows.Forms.Label();
+
             pnlOrderDrink = new System.Windows.Forms.Panel();
             buttonCalcCost = new System.Windows.Forms.Button();
             lblSelectedDrink = new System.Windows.Forms.Label();
@@ -58,12 +59,20 @@
             listViewSelectDrink = new System.Windows.Forms.ListView();
             pictureBox2 = new System.Windows.Forms.PictureBox();
             listViewSelectStudent = new System.Windows.Forms.ListView();
+            pnlRooms = new System.Windows.Forms.Panel();
+            pictureBox2 = new System.Windows.Forms.PictureBox();
+            listViewRooms = new System.Windows.Forms.ListView();
+
             label2 = new System.Windows.Forms.Label();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+
             pnlOrderDrink.SuspendLayout();
+
+            pnlRooms.SuspendLayout();
+
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
@@ -122,6 +131,7 @@
             roomsToolStripMenuItem.Name = "roomsToolStripMenuItem";
             roomsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             roomsToolStripMenuItem.Text = "Rooms";
+            roomsToolStripMenuItem.Click += roomsToolStripMenuItem_Click_1;
             // 
             // drinkSuppliesToolStripMenuItem
             // 
@@ -201,6 +211,7 @@
             label1.TabIndex = 0;
             label1.Text = "Students";
             // 
+
             // pnlOrderDrink
             // 
             pnlOrderDrink.Controls.Add(buttonCalcCost);
@@ -304,6 +315,17 @@
             listViewSelectDrink.TabIndex = 3;
             listViewSelectDrink.UseCompatibleStateImageBehavior = false;
             listViewSelectDrink.SelectedIndexChanged += listViewSelectDrink_SelectedIndexChanged;
+
+            // pnlRooms
+            // 
+            pnlRooms.Controls.Add(pictureBox2);
+            pnlRooms.Controls.Add(listViewRooms);
+            pnlRooms.Controls.Add(label2);
+            pnlRooms.Location = new System.Drawing.Point(12, 27);
+            pnlRooms.Name = "pnlRooms";
+            pnlRooms.Size = new System.Drawing.Size(938, 466);
+            pnlRooms.TabIndex = 3;
+
             // 
             // pictureBox2
             // 
@@ -314,6 +336,7 @@
             pictureBox2.TabIndex = 2;
             pictureBox2.TabStop = false;
             // 
+
             // listViewSelectStudent
             // 
             listViewSelectStudent.Location = new System.Drawing.Point(16, 75);
@@ -322,6 +345,15 @@
             listViewSelectStudent.TabIndex = 1;
             listViewSelectStudent.UseCompatibleStateImageBehavior = false;
             listViewSelectStudent.SelectedIndexChanged += listViewSelectStudent_SelectedIndexChanged;
+
+            // listViewRooms
+            // 
+            listViewRooms.Location = new System.Drawing.Point(16, 42);
+            listViewRooms.Name = "listViewRooms";
+            listViewRooms.Size = new System.Drawing.Size(766, 307);
+            listViewRooms.TabIndex = 1;
+            listViewRooms.UseCompatibleStateImageBehavior = false;
+
             // 
             // label2
             // 
@@ -329,20 +361,29 @@
             label2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             label2.Location = new System.Drawing.Point(13, 7);
             label2.Name = "label2";
+
             label2.Size = new System.Drawing.Size(155, 32);
             label2.TabIndex = 0;
             label2.Text = "Order a drink";
             label2.Click += label2_Click;
+
+            label2.Size = new System.Drawing.Size(107, 32);
+            label2.TabIndex = 0;
+            label2.Text = "Students";
+
             // 
             // SomerenUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(962, 505);
+
             Controls.Add(pnlOrderDrink);
+
             Controls.Add(menuStrip1);
-            Controls.Add(pnlStudents);
             Controls.Add(pnlDashboard);
+            Controls.Add(pnlRooms);
+            Controls.Add(pnlStudents);
             MainMenuStrip = menuStrip1;
             Name = "SomerenUI";
             Text = "SomerenApp";
@@ -353,8 +394,13 @@
             pnlStudents.ResumeLayout(false);
             pnlStudents.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+
             pnlOrderDrink.ResumeLayout(false);
             pnlOrderDrink.PerformLayout();
+
+            pnlRooms.ResumeLayout(false);
+            pnlRooms.PerformLayout();
+
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -376,6 +422,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListView listViewStudents;
         private System.Windows.Forms.Label label1;
+
         private System.Windows.Forms.ToolStripMenuItem drinksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orderADrinkToolStripMenuItem;
         private System.Windows.Forms.Panel pnlOrderDrink;
@@ -392,5 +439,11 @@
         private System.Windows.Forms.Label lblSelectedStudent;
         private System.Windows.Forms.Button buttonCalcCost;
         private System.Windows.Forms.ToolStripMenuItem drinkSuppliesToolStripMenuItem;
+
+        private System.Windows.Forms.Panel pnlRooms;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.ListView listViewRooms;
+        private System.Windows.Forms.Label label2;
+
     }
 }
