@@ -33,12 +33,12 @@ namespace SomerenDAL
             {
                 Lecturer lecturer = new Lecturer()
                 {
-                    LecturerNumber = (int)dr["Lecturer Number"], 
+                    LecturerNumber = (int)dr["Lecturer Number"],
                     FirstName = dr["First Name"].ToString(),
                     LastName = dr["Last Name"].ToString(),
-                    Telephone = dr["Telephone Number"].ToString(), 
+                    Telephone = dr["Telephone Number"].ToString(),
                     Age = (int)dr["Age"],
-                    RoomNumber = (int)dr["Room Number"] 
+                    RoomNumber = (int)dr["Room Number"]
                 };
 
                 // Add the Lecturer object to the list

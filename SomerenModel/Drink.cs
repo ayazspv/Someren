@@ -8,7 +8,7 @@ namespace SomerenModel
 {
     public class Drink
     {
-        public int DrinkNumber { get; set; } 
+        public int DrinkNumber { get; set; }
         public string DrinkName { get; set; }
         public double VAT { get; set; }
         public string IsAlcoholic { get; set; }
@@ -16,3 +16,4 @@ namespace SomerenModel
         public int Stock { get; set; }
     }
 }
+

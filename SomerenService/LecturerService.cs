@@ -19,7 +19,7 @@ namespace SomerenService
 
         public List<Lecturer> GetLecturers()
         {
-            List<Lecturer> lecturer = lecturerdb.GetAllLecturers(); 
+            List<Lecturer> lecturer = lecturerdb.GetAllLecturers();
             return lecturer;
         }
     }

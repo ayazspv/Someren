@@ -12,9 +12,8 @@ namespace SomerenDAL
 
         public BaseDao()
         {
-            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SomerenDatabase"].ConnectionString);
-            adapter = new SqlDataAdapter();
-
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SomerenDatabase"].ConnectionString);
+                adapter = new SqlDataAdapter();
         }
 
         protected SqlConnection OpenConnection()
@@ -85,23 +84,22 @@ namespace SomerenDAL
             }
         }
 
+        /* For Select Queries */
         protected DataTable ExecuteSelectQuery(string query, params SqlParameter[] sqlParameters)
         {
             SqlCommand command = new SqlCommand();
-            DataTable dataTable = new DataTable();
+            DataTable dataTable;
             DataSet dataSet = new DataSet();
 
             try
             {
-                using (SqlConnection connection = OpenConnection())
-                {
-                    command.Connection = connection;
-                    command.CommandText = query;
-                    command.Parameters.AddRange(sqlParameters);
-                    adapter.SelectCommand = command;
-                    adapter.Fill(dataSet);
-                    dataTable = dataSet.Tables[0];
-                }
+                command.Connection = OpenConnection();
+                command.CommandText = query;
+                command.Parameters.AddRange(sqlParameters);
+                command.ExecuteNonQuery();
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet);
+                dataTable = dataSet.Tables[0];
             }
             catch (SqlException e)
             {
@@ -110,7 +108,7 @@ namespace SomerenDAL
             }
             finally
             {
-                CloseConnection(); // Close the connection in the finally block
+                CloseConnection();
             }
 
             return dataTable;
