@@ -424,6 +424,7 @@ namespace SomerenUI
             textBoxSelectDrinkQuantity.Clear();
             lblSelectedDrink.Text = "Select a drink";
             lblSelectedStudent.Text = "Select a student";
+            lblShowTotalPrice.Text = "Total Price:";
             ShowOrdersPanel();
         }
         private void SetupDrinkListView()
@@ -449,7 +450,7 @@ namespace SomerenUI
                 //item.SubItems.Add(drink.Name);
                 item.SubItems.Add(drink.DrinkName.ToString());
                 item.SubItems.Add(drink.IsAlcoholic.ToString());
-                item.SubItems.Add(drink.Price.ToString("�0.00"));
+                item.SubItems.Add(drink.Price.ToString("€0.00"));
                 item.SubItems.Add(drink.Stock.ToString());
                 listViewSelectDrink.Items.Add(item);
             }
@@ -477,7 +478,7 @@ namespace SomerenUI
             double totalPrice = selectedDrink.Price * quantity;
 
             // Display total price in label6
-            lblShowTotalPrice.Text = "Total Price: �" + totalPrice.ToString("0.00");
+            lblShowTotalPrice.Text = "Total Price: €" + totalPrice.ToString("0.00");
         }
 
         private void placeOrderButton_Click_2(object sender, EventArgs e)
@@ -563,7 +564,7 @@ namespace SomerenUI
 
             CustomersData.Text = $"{numberOfCustomers}";
             SalesData.Text = $"{totalDrinksSold}";
-            TurnoverData.Text = $"{turnover:$0.00}";
+            TurnoverData.Text = $"{turnover:€0.00}";
         }
         private void GeneraeRevenue_Click(object sender, EventArgs e)
         {
