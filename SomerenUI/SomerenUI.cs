@@ -23,6 +23,7 @@ namespace SomerenUI
             pnlLecturers.Hide();
             pnlOrderDrink.Hide();
             pnlDrinkSupplies.Hide();
+            pnlReport.Hide();
 
             // show dashboard
             pnlDashboard.Show();
@@ -35,6 +36,7 @@ namespace SomerenUI
             pnlOrderDrink.Hide();
             pnlLecturers.Hide();
             pnlDrinkSupplies.Hide();
+            pnlReport.Hide();
 
             // show students
             pnlStudents.Show();
@@ -62,6 +64,7 @@ namespace SomerenUI
             pnlLecturers.Hide();
             pnlOrderDrink.Hide();
             pnlDrinkSupplies.Hide();
+            pnlReport.Hide();
 
             // show students
             pnlRooms.Show();
@@ -91,6 +94,7 @@ namespace SomerenUI
             pnlRooms.Hide();
             pnlLecturers.Hide();
             pnlOrderDrink.Hide();
+            pnlReport.Hide();
 
             // Show drinks panel
             pnlDrinkSupplies.Show();
@@ -118,6 +122,7 @@ namespace SomerenUI
             pnlRooms.Hide();
             pnlOrderDrink.Hide();
             pnlDrinkSupplies.Hide();
+            pnlReport.Hide();
 
             pnlLecturers.Show();
 
@@ -143,6 +148,7 @@ namespace SomerenUI
             pnlLecturers.Hide();
             pnlRooms.Hide();
             pnlDrinkSupplies.Hide();
+            pnlReport.Hide();
 
             pnlOrderDrink.Show();
 
@@ -529,7 +535,31 @@ namespace SomerenUI
 
 
 
+        //Ayaz's assignment 3
 
+
+        void ShowRevenue()
+        {
+            DateTime startDate = StartDate.Value;
+            DateTime endDate = EndDate.Value;
+
+            ReportService reportService = new ReportService();
+            List<Report> filteredReports = reportService.GetReportBetweenDates(startDate, endDate);
+
+            var (numberOfCustomers, totalDrinksSold, turnover) = reportService.GetTurnover(filteredReports);
+
+
+            CustomersData.Text = $"{numberOfCustomers}";
+            SalesData.Text = $"{totalDrinksSold}";
+            TurnoverData.Text = $"{turnover:$0.00}";
+        }
+        private void GeneraeRevenue_Click(object sender, EventArgs e)
+        {
+            ShowRevenue();
+        }
+
+
+        //End of Ayaz's assignment 3
 
 
 
@@ -570,7 +600,18 @@ namespace SomerenUI
         {
             Application.Exit();
         }
-        private void manageToolStripMenuItem_Click(object sender, EventArgs e)
+        private void reportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pnlDashboard.Hide();
+            pnlStudents.Hide();
+            pnlLecturers.Hide();
+            pnlRooms.Hide();
+            pnlDrinkSupplies.Hide();
+            pnlOrderDrink.Hide();
+
+            pnlReport.Show();
+        }
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ShowDrinksPanel();
         }
@@ -616,6 +657,10 @@ namespace SomerenUI
         }
 
         private void buttonCalcCost_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void placeOrderButton_Click_1(object sender, EventArgs e)
         {
 
         }
