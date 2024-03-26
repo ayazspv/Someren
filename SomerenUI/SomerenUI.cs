@@ -410,7 +410,7 @@ namespace SomerenUI
                 lblSelectedStudent.Text = "Selected Student: " + selectedStudentFirstName;
             }
         }
-       
+
         void RefreshDrinkOrderPanel()
         {
             listViewSelectDrink.SelectedItems.Clear();
@@ -620,5 +620,9 @@ namespace SomerenUI
 
         }
 
+        private void pnlDashboard_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

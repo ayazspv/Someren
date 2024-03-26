@@ -171,6 +171,7 @@
             pnlDashboard.Name = "pnlDashboard";
             pnlDashboard.Size = new System.Drawing.Size(1072, 621);
             pnlDashboard.TabIndex = 1;
+            pnlDashboard.Paint += pnlDashboard_Paint;
             // 
             // lblDashboard
             // 
