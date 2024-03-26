@@ -22,8 +22,8 @@ namespace SomerenDAL
             {
                 Student student = new Student()
                 {
-                    Number = (int)dr["StudentId"],
-                    Name = dr["Name"].ToString()
+                    //Number = (int)dr["StudentId"],
+                    //Name = dr["Name"].ToString()
                 };
                 students.Add(student);
             }
