@@ -70,6 +70,8 @@ namespace SomerenUI
         {
             pnlStudents.Hide();
             pnlDashboard.Hide();
+            DrinkSuppliesPnl.Hide();
+            pnlLecturers.Show();
 
             try
             {
@@ -133,7 +135,8 @@ namespace SomerenUI
             pnlStudents.Hide();
             pnlDashboard.Hide();
             pnlLecturers.Hide();
-            DrinkSuppliesPnl.Show(); 
+
+            DrinkSuppliesPnl.Show();
 
             try
             {
@@ -166,29 +169,45 @@ namespace SomerenUI
 
             // Add columns to the ListView
             listViewDrinks.Columns.Clear();
-            listViewDrinks.Columns.Add("Drink Number", 100);
+            listViewDrinks.Columns.Add("Drink Number", 150);
             listViewDrinks.Columns.Add("Name", 100);
             listViewDrinks.Columns.Add("VAT", 100);
             listViewDrinks.Columns.Add("Is_Alcoholic", 100); // Correct column name
             listViewDrinks.Columns.Add("Price", 100);
             listViewDrinks.Columns.Add("Stock", 100);
+            listViewDrinks.Columns.Add("Stock Status", 175);
+
+            string drinkStatus;
 
             // Populate the ListView with drinks
             foreach (Drink drink in drinks)
             {
+                // Look up the status of the stock
+
                 ListViewItem li = new ListViewItem(new string[] {
-                    drink.DrinkNumber.ToString(),
-                    drink.DrinkName,
-                    drink.VAT.ToString(),
-                    drink.IsAlcoholic ? "Yes" : "No",
-                    drink.Price.ToString(),
-                    drink.Stock.ToString()
-                });
+                drink.DrinkNumber.ToString(),
+                drink.DrinkName,
+                drink.VAT.ToString(),
+                drink.IsAlcoholic.ToString(),
+                //drink.IsAlcoholic ? "Yes" : "No",
+                drink.Price.ToString(),
+                drink.Stock.ToString(),
+    });
                 li.Tag = drink;
+
+                // Check if stock is low and add an indication if needed
+                if (drink.Stock < 10)
+                {
+                    li.SubItems.Add("Stock nearly depleted");
+                }
+                else
+                {
+                    li.SubItems.Add("Stock sufficient");
+                }
+
                 listViewDrinks.Items.Add(li);
             }
         }
-
 
         private void dashboardToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -233,6 +252,49 @@ namespace SomerenUI
         private void listViewDrinks_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Code to handle item selection in the drinks ListView, if needed
+        }
+
+        private void activitiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listViewStudents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlStudents_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DeleteForm deletedrink = new DeleteForm();
+            deletedrink.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AddFrom addFrom = new AddFrom();
+            addFrom.ShowDialog();
+        }
+
+        private void UpdateDrink_Click(object sender, EventArgs e)
+        {
+            UpDateForm upDateForm = new UpDateForm();
+            upDateForm.ShowDialog();
+        }
+
+        private void DrinkSuppliesPnl_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

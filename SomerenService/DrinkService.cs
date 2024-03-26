@@ -22,5 +22,27 @@ namespace SomerenService
             List<Drink> drinks = Drinkdb.GetAllDrinks();
             return drinks;
         }
+
+        public void AddDrink(int drinkNumber, string drinkName, double VAT, string IsAlscholic,double price,int Stock)
+        {
+            // Create a Drink object using the user input
+            Drink newDrink = new Drink
+            {
+               DrinkNumber  = drinkNumber,
+                DrinkName = drinkName,
+                VAT = VAT,
+                IsAlcoholic = IsAlscholic,  
+                Price = price,  
+                Stock = Stock   
+            };
+
+            // Calling the method from DrinkDao to insert the Drink object into the database
+            Drinkdb.InsertDrink(newDrink);
+        }
+
+     
+        }
+
+
     }
-}
+
