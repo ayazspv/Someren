@@ -9,10 +9,11 @@ namespace SomerenModel
     public class Drink
     {
         public int DrinkNumber { get; set; }
-        public string Name { get; set; }
-        public double VAT { get; set; } // Change the data type to double
+        public string DrinkName { get; set; }
+        public double VAT { get; set; }
         public bool IsAlcoholic { get; set; }
         public double Price { get; set; }
         public int Stock { get; set; }
     }
 }
+

@@ -65,6 +65,10 @@
             pictureBox3 = new System.Windows.Forms.PictureBox();
             listViewLecturers = new System.Windows.Forms.ListView();
             label3 = new System.Windows.Forms.Label();
+            pnlDrinkSupplies = new System.Windows.Forms.Panel();
+            pictureBox4 = new System.Windows.Forms.PictureBox();
+            listViewDrinks = new System.Windows.Forms.ListView();
+            label4 = new System.Windows.Forms.Label();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
@@ -74,6 +78,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlLecturers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            pnlDrinkSupplies.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -395,17 +401,55 @@
             label3.TabIndex = 0;
             label3.Text = "Lecturers";
             // 
+            // pnlDrinkSupplies
+            // 
+            pnlDrinkSupplies.Controls.Add(pictureBox4);
+            pnlDrinkSupplies.Controls.Add(listViewDrinks);
+            pnlDrinkSupplies.Controls.Add(label4);
+            pnlDrinkSupplies.Location = new System.Drawing.Point(12, 27);
+            pnlDrinkSupplies.Name = "pnlDrinkSupplies";
+            pnlDrinkSupplies.Size = new System.Drawing.Size(938, 466);
+            pnlDrinkSupplies.TabIndex = 3;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = (System.Drawing.Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new System.Drawing.Point(805, 0);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new System.Drawing.Size(130, 123);
+            pictureBox4.TabIndex = 2;
+            pictureBox4.TabStop = false;
+            // 
+            // listViewDrinks
+            // 
+            listViewDrinks.Location = new System.Drawing.Point(16, 42);
+            listViewDrinks.Name = "listViewDrinks";
+            listViewDrinks.Size = new System.Drawing.Size(766, 307);
+            listViewDrinks.TabIndex = 1;
+            listViewDrinks.UseCompatibleStateImageBehavior = false;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label4.Location = new System.Drawing.Point(13, 7);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(81, 32);
+            label4.TabIndex = 0;
+            label4.Text = "Drinks";
+            // 
             // SomerenUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(962, 505);
             Controls.Add(menuStrip1);
-            Controls.Add(pnlDashboard);
-            Controls.Add(pnlRooms);
-            Controls.Add(pnlLecturers);
-            Controls.Add(pnlStudents);
             Controls.Add(pnlOrderDrink);
+            Controls.Add(pnlDashboard);
+            Controls.Add(pnlStudents);
+            Controls.Add(pnlLecturers);
+            Controls.Add(pnlRooms);
+            Controls.Add(pnlDrinkSupplies);
             MainMenuStrip = menuStrip1;
             Name = "SomerenUI";
             Text = "SomerenApp";
@@ -424,6 +468,9 @@
             pnlLecturers.ResumeLayout(false);
             pnlLecturers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            pnlDrinkSupplies.ResumeLayout(false);
+            pnlDrinkSupplies.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -467,6 +514,10 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.ListView listViewLecturers;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel pnlDrinkSupplies;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.ListView listViewDrinks;
+        private System.Windows.Forms.Label label4;
         //private System.Windows.Forms.Label label2;
 
     }
