@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System;
 using System.Reflection.Emit;
+using SomerenDAL;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Collections;
 
 namespace SomerenUI
 {
@@ -288,27 +291,50 @@ namespace SomerenUI
 
             // Add columns to the ListView
             listViewDrinks.Columns.Clear();
-            listViewDrinks.Columns.Add("Drink Number", 100);
+            listViewDrinks.Columns.Add("Drink Number", 150);
             listViewDrinks.Columns.Add("Name", 100);
             listViewDrinks.Columns.Add("VAT", 100);
             listViewDrinks.Columns.Add("Is_Alcoholic", 100); // Correct column name
             listViewDrinks.Columns.Add("Price", 100);
             listViewDrinks.Columns.Add("Stock", 100);
+            listViewDrinks.Columns.Add("Stock Status", 175);
+
+            listViewDrinks.FullRowSelect = true;
+            listViewDrinks.MultiSelect = false;
+
+            string drinkStatus;
 
             // Populate the ListView with drinks
             foreach (Drink drink in drinks)
             {
+                // Look up the status of the stock
+
                 ListViewItem li = new ListViewItem(new string[] {
-            drink.DrinkNumber.ToString(),
-            drink.DrinkName,
-            drink.VAT.ToString(),
-            drink.IsAlcoholic ? "Yes" : "No",
-            drink.Price.ToString(),
-            drink.Stock.ToString()
-        });
+                drink.DrinkNumber.ToString(),
+                drink.DrinkName,
+                drink.VAT.ToString(),
+                drink.IsAlcoholic.ToString(),
+                //drink.IsAlcoholic ? "Yes" : "No",
+                drink.Price.ToString(),
+                drink.Stock.ToString(),
+    });
                 li.Tag = drink;
+
+                // Check if stock is low and add an indication if needed
+                if (drink.Stock < 10)
+                {
+                    li.SubItems.Add("Stock nearly depleted");
+                }
+                else
+                {
+                    li.SubItems.Add("Stock sufficient");
+                }
+
                 listViewDrinks.Items.Add(li);
             }
+
+
+
         }
 
 
@@ -567,8 +593,8 @@ namespace SomerenUI
         }
         private void GeneraeRevenue_Click(object sender, EventArgs e)
         {
-            
-            
+
+
             ShowRevenue();
         }
 
@@ -683,5 +709,56 @@ namespace SomerenUI
         {
 
         }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            AddDrinksFrom addDrinksFrom = new AddDrinksFrom();
+            addDrinksFrom.ShowDialog();
+        }
+
+        private void listViewDrinks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DialogResult result = DialogResult.No;
+
+            if (listViewSelectDrink.SelectedItems.Count > 0)
+            {
+                result = MessageBox.Show("Are you sure you want to delete this drink?", "Confirmation", MessageBoxButtons.YesNo);
+            }
+            else
+            {
+                MessageBox.Show("Please select a drink to delete.");
+            }
+
+            if (result == DialogResult.Yes)
+            {
+                // Assuming listViewSelectDrink is the name of your ListView
+                ListViewItem selectedItem = listViewSelectDrink.SelectedItems[0];
+                Drink drinkSelected = (Drink)selectedItem.Tag;
+
+                // Assuming DrinkDao is the implementation of DrinksDao interface
+                DrinkDao drinkDao = new DrinkDao();
+                drinkDao.DeleteDataFromDatabase(drinkSelected.DrinkNumber);
+
+                // Remove the selected item from the ListView
+                listViewSelectDrink.Items.Remove(selectedItem);
+
+                // Inform the user that the drink was deleted successfully
+                MessageBox.Show("Drink deleted successfully.");
+            }
+            else if (result == DialogResult.Cancel) // Handle the case where the user cancels the deletion operation
+            {
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
+            }
+
+        }
+
+
+        }
+
     }
-}

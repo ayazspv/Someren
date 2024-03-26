@@ -1,8 +1,8 @@
 ﻿using SomerenModel;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SomerenDAL
 {
@@ -17,6 +17,33 @@ namespace SomerenDAL
 
             // Convert the DataTable to a list of Drinks objects
             return ReadTables(dataTable);
+        }
+
+        public void InsertDrink(Drink drink)
+        {
+            string query = "INSERT INTO [Drink] ([Drink Number], [Name], [VAT], [Is_Alcoholic], [Price], [Stock]) " +
+                           "VALUES (@DrinkNumber, @Name, @VAT, @IsAlcoholic, @Price, @Stock)";
+
+            SqlParameter[] sqlParameters = new SqlParameter[6];
+
+            sqlParameters[0] = new SqlParameter("@DrinkNumber", SqlDbType.Int) { Value = drink.DrinkNumber };
+            sqlParameters[1] = new SqlParameter("@Name", SqlDbType.VarChar) { Value = drink.DrinkName };
+            sqlParameters[2] = new SqlParameter("@VAT", SqlDbType.Float) { Value = drink.VAT };
+            sqlParameters[3] = new SqlParameter("@IsAlcoholic", SqlDbType.VarChar) { Value = drink.IsAlcoholic };
+            sqlParameters[4] = new SqlParameter("@Price", SqlDbType.Float) { Value = drink.Price };
+            sqlParameters[5] = new SqlParameter("@Stock", SqlDbType.Int) { Value = drink.Stock };
+
+            ExecuteEditQuery(query, sqlParameters);
+        }
+
+        public void DeleteDataFromDatabase(int drinkNumber)
+        {
+            string query = "DELETE FROM [Drink] WHERE [Drink Number] = @DrinkNumber";
+
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@DrinkNumber", SqlDbType.Int) { Value = drinkNumber };
+
+            ExecuteEditQuery(query, sqlParameters);
         }
 
         // Method to convert DataTable to a list of Drinks objects
