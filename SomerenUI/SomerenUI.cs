@@ -548,6 +548,18 @@ namespace SomerenUI
 
             var (numberOfCustomers, totalDrinksSold, turnover) = reportService.GetTurnover(filteredReports);
 
+            if (startDate >= endDate)
+            {
+                MessageBox.Show("Please select a valid date period. The start date should be before the end date.", "Invalid Date Period", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate dates in the future
+            if (endDate > DateTime.Today.AddDays(1))
+            {
+                MessageBox.Show("Please select a valid date period. You cannot select dates in the future.", "Invalid Date Period", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             CustomersData.Text = $"{numberOfCustomers}";
             SalesData.Text = $"{totalDrinksSold}";
@@ -555,6 +567,8 @@ namespace SomerenUI
         }
         private void GeneraeRevenue_Click(object sender, EventArgs e)
         {
+            
+            
             ShowRevenue();
         }
 
