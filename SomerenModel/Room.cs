@@ -1,17 +1,10 @@
-﻿using System;
-
-namespace SomerenModel
+﻿namespace SomerenModel
 {
     public class Room
     {
-        public int RoomNumber { get; set; }
-        public string RoomType { get; set; }
-        public int Floor { get; set; }
-        public int NumberOfBeds { get; set; }
-
-        public override string ToString()
-        {
-            return $"{RoomNumber} {RoomType} {Floor} {NumberOfBeds}";
-        }
+        public int Id { get; set; }         // database id
+        public int Number { get; set; }     // RoomNumber, e.g. 206
+        public int Capacity { get; set; }   // number of beds, either 4, 6, 8, 12 or 16
+        public bool Type { get; set; }      // student = false, teacher = true
     }
 }
