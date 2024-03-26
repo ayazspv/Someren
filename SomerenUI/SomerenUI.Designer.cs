@@ -444,11 +444,11 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(962, 505);
             Controls.Add(menuStrip1);
-            Controls.Add(pnlOrderDrink);
             Controls.Add(pnlDashboard);
             Controls.Add(pnlStudents);
             Controls.Add(pnlLecturers);
             Controls.Add(pnlRooms);
+            Controls.Add(pnlOrderDrink);
             Controls.Add(pnlDrinkSupplies);
             MainMenuStrip = menuStrip1;
             Name = "SomerenUI";
