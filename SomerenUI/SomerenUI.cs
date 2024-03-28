@@ -7,6 +7,7 @@ using System.Reflection.Emit;
 using SomerenDAL;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Collections;
+using System.Linq;
 
 namespace SomerenUI
 {
@@ -27,6 +28,7 @@ namespace SomerenUI
             pnlOrderDrink.Hide();
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
+            pnlManageActivitySupervisors.Hide();
 
             // show dashboard
             pnlDashboard.Show();
@@ -40,6 +42,7 @@ namespace SomerenUI
             pnlLecturers.Hide();
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
+            pnlManageActivitySupervisors.Hide();
 
             // show students
             pnlStudents.Show();
@@ -68,6 +71,7 @@ namespace SomerenUI
             pnlOrderDrink.Hide();
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
+            pnlManageActivitySupervisors.Hide();
 
             // show students
             pnlRooms.Show();
@@ -98,6 +102,8 @@ namespace SomerenUI
             pnlLecturers.Hide();
             pnlOrderDrink.Hide();
             pnlReport.Hide();
+            pnlManageActivitySupervisors.Hide();
+
 
             // Show drinks panel
             pnlDrinkSupplies.Show();
@@ -126,6 +132,7 @@ namespace SomerenUI
             pnlOrderDrink.Hide();
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
+            pnlManageActivitySupervisors.Hide();
 
             pnlLecturers.Show();
 
@@ -152,6 +159,7 @@ namespace SomerenUI
             pnlRooms.Hide();
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
+            pnlManageActivitySupervisors.Hide();
 
             pnlOrderDrink.Show();
 
@@ -649,6 +657,7 @@ namespace SomerenUI
             pnlRooms.Hide();
             pnlDrinkSupplies.Hide();
             pnlOrderDrink.Hide();
+            pnlManageActivitySupervisors.Hide();
 
             pnlReport.Show();
         }
@@ -760,6 +769,261 @@ namespace SomerenUI
         }
 
 
+        private void HideAllPanelsOfApplication()
+        {
+            pnlDashboard.Hide();
+            pnlStudents.Hide();
+            pnlRooms.Hide();
+            pnlLecturers.Hide();
+            pnlOrderDrink.Hide();
+            pnlReport.Hide();
+            pnlManageActivitySupervisors.Hide();
         }
 
+        //        Start assignment 4 damisa
+        //        .........................
+        
+        private void ShowActivitySupervisorsPanel()
+        {
+            HideAllPanelsOfApplication();
+
+            pnlManageActivitySupervisors.Show();
+            EnableSupervisorListViewSelect();
+
+            try
+            {
+                // get and display all activities
+                List<Activity> activities = GetActivities();
+                DisplayActivitiesSupervisors(activities);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while loading the activities: " + e.Message);
+            }
+        }
+        private void EnableSupervisorListViewSelect()
+        {
+            //enable row selection and only be able to select 1 at a time
+            listViewActivitiesSupervisors.FullRowSelect = true;
+            listViewActivitiesSupervisors.MultiSelect = false;
+            listViewAreSupervisors.FullRowSelect = true;
+            listViewAreSupervisors.MultiSelect = false;
+            listViewAreNotSupervisors.FullRowSelect = true;
+            listViewAreNotSupervisors.MultiSelect = false;
+        }
+        private List<Activity> GetActivities()
+        {
+            ActivityService activityService = new ActivityService();
+            List<Activity> activities = activityService.GetActivities();
+            return activities;
+        }
+        private void DisplayActivitiesSupervisors(List<Activity> activities)
+        {
+            listViewActivitiesSupervisors.Items.Clear();
+            SetupActivitiesSupervisorListView(activities);
+            PopulateActivitiesSupervisor(activities);
+        }
+        private void SetupActivitiesSupervisorListView(List<Activity> activity)
+        {
+            listViewActivitiesSupervisors.View = View.Details;
+            listViewActivitiesSupervisors.Columns.Clear();
+            listViewActivitiesSupervisors.Columns.AddRange(new[]
+            {
+                    new ColumnHeader { Text = "Activity Number", Width = 150 },
+                    new ColumnHeader { Text = "Name", Width = 200 },
+                    new ColumnHeader { Text = "Start Time", Width = 200 },
+                    new ColumnHeader { Text = "End Time", Width = 200 }});
+        }
+
+        private void PopulateActivitiesSupervisor(List<Activity> activities)
+        {
+            foreach (Activity activity in activities)
+            {
+                ListViewItem li = new ListViewItem(new string[]
+                {
+                        activity.ActivityNumber.ToString(),
+                        activity.ActivityName,
+                        activity.StartTime.ToString(),
+                        activity.EndTime.ToString()
+                });
+                li.Tag = activity;
+                listViewActivitiesSupervisors.Items.Add(li);
+            }
+        }
+        private void manageActivitySupervisorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowActivitySupervisorsPanel();
+        }
+
+        private void btnRemoveSupervisor_Click(object sender, EventArgs e)
+        {
+            if (listViewAreSupervisors.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a supervisor to remove.");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("Do you really want to remove this lecturer " +
+                "as supervisor?", "Confirm Removal of Supervisor", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+
+            // Get the selected lecturer to remove from supervisors
+            ListViewItem selectedItem = listViewAreSupervisors.SelectedItems[0];
+            Lecturer lecturer = (Lecturer)selectedItem.Tag;
+
+            ListViewItem selectedActivityItem = listViewActivitiesSupervisors.SelectedItems[0];
+            Activity activity = (Activity)selectedActivityItem.Tag;
+
+            // Remove the lecturer from the supervisors table in the database
+            SupervisorService supervisorService = new SupervisorService();
+            supervisorService.RemoveSupervisorFromDatabase(lecturer.LecturerNumber, activity.ActivityNumber);
+
+            RefreshSupervisorListViews();
+        }
+
+        private void btnAddSupervisor_Click(object sender, EventArgs e)
+        {
+            if (listViewAreNotSupervisors.SelectedItems.Count == 0)
+            { MessageBox.Show("Please select a lecturer to add as supervisor.");
+                return;}
+
+            // Get the selected lecturer to remove from supervisors
+            ListViewItem selectedItem = listViewAreNotSupervisors.SelectedItems[0];
+            Lecturer lecturer = (Lecturer)selectedItem.Tag;
+            
+            // Get the selected activity
+            ListViewItem selectedActivityItem = listViewActivitiesSupervisors.SelectedItems[0];
+            Activity activity = (Activity)selectedActivityItem.Tag;
+
+            // Add the lecturer to the supervisors table in the database
+            SupervisorService supervisorService = new SupervisorService();
+            supervisorService.AddSupervisorToDatabase(lecturer.LecturerNumber, activity.ActivityNumber);
+
+            RefreshSupervisorListViews();
+        }
+
+
+        private void listViewActivitiesSupervisors_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshSupervisorListViews();
+        }
+
+        private void RefreshSupervisorListViews()
+        {
+            if (listViewActivitiesSupervisors.SelectedItems.Count == 0)
+                return;
+
+            // Get the selected activity
+            ListViewItem selectedItem = listViewActivitiesSupervisors.SelectedItems[0];
+            int selectedActivityNumber = int.Parse(selectedItem.SubItems[0].Text);
+
+            //get the supervisors from the database
+            List<Lecturer> supervisor = GetSupervisors(selectedActivityNumber);
+
+            //get the non-supervisors from database
+            List<Lecturer> nonSupervisor = GetNonSupervisors(selectedActivityNumber);
+
+            // Display supervisors and non-supervisors in the list views
+            DisplayLecturersThatSupervise(supervisor);
+            DisplayLecturersThatDontSupervise(nonSupervisor);
+        }
+
+        private List<Lecturer> GetSupervisors(int activityNumber)
+        {
+            LecturerService lecturerService = new LecturerService();
+            List<Lecturer> lecturers = lecturerService.GetSupervisors(activityNumber);
+            return lecturers;
+        }
+
+        private List<Lecturer> GetNonSupervisors(int activityNumber)
+        {
+            List<Lecturer> nonSupervisors = new List<Lecturer>();
+
+            // Get the lecturers
+            List<Lecturer> allLecturers = GetLecturers();
+
+            // Get the supervisors
+            List<Lecturer> supervisors = GetSupervisors(activityNumber);
+
+            // filter out the non supervisors
+            foreach (Lecturer lecturer in allLecturers)
+            {
+                if (!supervisors.Any(s => s.LecturerNumber == lecturer.LecturerNumber))
+                {
+                    nonSupervisors.Add(lecturer);
+                }
+            }
+            return nonSupervisors;
+        }
+
+
+        private void DisplayLecturersThatSupervise(List<Lecturer> supervisors)
+        {
+            // Clear the supervisors list view
+            listViewAreSupervisors.Items.Clear();
+            listViewAreSupervisors.View = View.Details;
+
+            if (listViewAreSupervisors.Columns.Count == 0)
+            {
+                listViewAreSupervisors.Columns.AddRange(new[]{
+            new ColumnHeader { Text = "Lecturer Number", Width = 130 },
+            new ColumnHeader { Text = "First Name", Width = 100 },
+            new ColumnHeader { Text = "Last Name", Width = 100 }});
+            }
+
+            // Populate the supervisors list view with the retrieved supervisors
+            foreach (Lecturer supervisor in supervisors)
+            {
+                ListViewItem item = new ListViewItem(new string[]
+                {
+                    supervisor.LecturerNumber.ToString(),
+                    supervisor.FirstName,
+                    supervisor.LastName
+                });
+                item.Tag = supervisor;
+                listViewAreSupervisors.Items.Add(item);
+            }
+        }
+
+
+        void DisplayLecturersThatDontSupervise(List<Lecturer> nonSupervisors)
+        {
+            // Clear the non-supervisors list view
+            listViewAreNotSupervisors.Items.Clear();
+            listViewAreNotSupervisors.View = View.Details;
+
+
+            // Define columns if not defined already
+            if (listViewAreNotSupervisors.Columns.Count == 0)
+            {
+                listViewAreNotSupervisors.Columns.AddRange(new[]{
+            new ColumnHeader { Text = "Lecturer Number", Width = 130 },
+            new ColumnHeader { Text = "First Name", Width = 100 },
+            new ColumnHeader { Text = "Last Name", Width = 100 }});
+            }
+            // Populate the non-supervisors list view with the retrieved non-supervisors
+            foreach (Lecturer nonSupervisor in nonSupervisors)
+            {
+                ListViewItem item = new ListViewItem(new string[]
+                {
+                    nonSupervisor.LecturerNumber.ToString(),
+                    nonSupervisor.FirstName,
+                    nonSupervisor.LastName
+                });
+                item.Tag = nonSupervisor;
+                listViewAreNotSupervisors.Items.Add(item);
+            }
+        }
+        private void pnlManageActivitySupervisors_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        //         .......................
+        //         End assignment 4 damisa
+
     }
+}
+

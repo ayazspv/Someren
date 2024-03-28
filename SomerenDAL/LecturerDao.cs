@@ -22,6 +22,25 @@ namespace SomerenDAL
             // Convert the DataTable to a list of Lecturer objects
             return ReadTables(dataTable);
         }
+        public List<Lecturer> GetByActivityNumber(int activityNumber)
+        {
+            // SQL query to select all lecturers associated with the provided activity number
+            string query = "SELECT l.* FROM Lecturer l " +
+                           "JOIN Supervisor s ON l.[Lecturer Number] = s.[Lecturer Number] " +
+                           "WHERE s.[Activity Number] = @ActivityNumber";
+
+            // Parameters for the query
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@ActivityNumber", SqlDbType.Int);
+            sqlParameters[0].Value = activityNumber;
+
+            // Execute the query and retrieve data
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+
+            // Convert the DataTable to a list of Lecturer objects
+            return ReadTables(dataTable);
+        }
+
 
         // Method to convert DataTable to a list of Lecturer objects
         private List<Lecturer> ReadTables(DataTable dataTable)
@@ -48,5 +67,7 @@ namespace SomerenDAL
             // Return the list of lecturers
             return lecturers;
         }
+
+
     }
 }
