@@ -22,5 +22,11 @@ namespace SomerenService
             List<Lecturer> lecturer = lecturerdb.GetAllLecturers();
             return lecturer;
         }
+
+        public List<Lecturer> GetSupervisors(int activityNumber)
+        {
+            List<Lecturer> supervisor = lecturerdb.GetByActivityNumber(activityNumber);
+            return supervisor;
+        }
     }
 }
