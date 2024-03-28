@@ -782,7 +782,7 @@ namespace SomerenUI
 
         //        Start assignment 4 damisa
         //        .........................
-        
+
         private void ShowActivitySupervisorsPanel()
         {
             HideAllPanelsOfApplication();
@@ -887,13 +887,15 @@ namespace SomerenUI
         private void btnAddSupervisor_Click(object sender, EventArgs e)
         {
             if (listViewAreNotSupervisors.SelectedItems.Count == 0)
-            { MessageBox.Show("Please select a lecturer to add as supervisor.");
-                return;}
+            {
+                MessageBox.Show("Please select a lecturer to add as supervisor.");
+                return;
+            }
 
             // Get the selected lecturer to remove from supervisors
             ListViewItem selectedItem = listViewAreNotSupervisors.SelectedItems[0];
             Lecturer lecturer = (Lecturer)selectedItem.Tag;
-            
+
             // Get the selected activity
             ListViewItem selectedActivityItem = listViewActivitiesSupervisors.SelectedItems[0];
             Activity activity = (Activity)selectedActivityItem.Tag;
