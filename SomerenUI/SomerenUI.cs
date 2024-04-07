@@ -29,6 +29,8 @@ namespace SomerenUI
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
             pnlManageActivitySupervisors.Hide();
+            pnlManageStudents.Hide();
+            PnlActivityParticipants.Hide();
 
             // show dashboard
             pnlDashboard.Show();
@@ -43,6 +45,8 @@ namespace SomerenUI
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
             pnlManageActivitySupervisors.Hide();
+            pnlManageStudents.Hide();
+            PnlActivityParticipants.Hide();
 
             // show students
             pnlStudents.Show();
@@ -72,6 +76,8 @@ namespace SomerenUI
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
             pnlManageActivitySupervisors.Hide();
+            pnlManageStudents.Hide();
+            PnlActivityParticipants.Hide();
 
             // show students
             pnlRooms.Show();
@@ -103,6 +109,8 @@ namespace SomerenUI
             pnlOrderDrink.Hide();
             pnlReport.Hide();
             pnlManageActivitySupervisors.Hide();
+            pnlManageStudents.Hide();
+            PnlActivityParticipants.Hide();
 
 
             // Show drinks panel
@@ -133,6 +141,8 @@ namespace SomerenUI
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
             pnlManageActivitySupervisors.Hide();
+            pnlManageStudents.Hide();
+            PnlActivityParticipants.Hide();
 
             pnlLecturers.Show();
 
@@ -160,6 +170,8 @@ namespace SomerenUI
             pnlDrinkSupplies.Hide();
             pnlReport.Hide();
             pnlManageActivitySupervisors.Hide();
+            pnlManageStudents.Hide();
+            PnlActivityParticipants.Hide();
 
             pnlOrderDrink.Show();
 
@@ -218,6 +230,20 @@ namespace SomerenUI
 
             // Populate the listview with student data
             PopulateStudents(students);
+        }
+        private void DisplayStudents2(List<Student> students)
+        {
+            // Clear the listview before filling it
+            listViewStudents2.Items.Clear();
+
+            // Configure the ListView to display items vertically
+            listViewStudents2.View = View.Details;
+
+            // Add columns for each property
+            AddStudentColumns2();
+
+            // Populate the listview with student data
+            PopulateStudents2(students);
         }
         private void DisplayRooms(List<Room> rooms)
         {
@@ -407,6 +433,18 @@ namespace SomerenUI
                 new ColumnHeader { Text = "Class", Width = 100 },
                 new ColumnHeader { Text = "Room Number", Width = 100 }});
         }
+        private void AddStudentColumns2()
+        {
+            listViewStudents2.Columns.Clear();
+            listViewStudents2.Columns.AddRange(new[]
+            {
+                new ColumnHeader { Text = "Student Number", Width = 100 },
+                new ColumnHeader { Text = "First Name", Width = 100 },
+                new ColumnHeader { Text = "Last Name", Width = 100 },
+                new ColumnHeader { Text = "Telephone Number", Width = 100 },
+                new ColumnHeader { Text = "Class", Width = 100 },
+                new ColumnHeader { Text = "Room Number", Width = 100 }});
+        }
         private void PopulateStudents(List<Student> students)
         {
             foreach (Student student in students)
@@ -422,6 +460,23 @@ namespace SomerenUI
                 });
 
                 listViewStudents.Items.Add(li);
+            }
+        }
+        private void PopulateStudents2(List<Student> students)
+        {
+            foreach (Student student in students)
+            {
+                ListViewItem li = new ListViewItem(new string[]
+                {
+                    student.StudentNumber.ToString(),
+                    student.FirstName,
+                    student.LastName,
+                    student.TelephoneNumber,
+                    student.Class,
+                    student.RoomNumber.ToString()
+                });
+
+                listViewStudents2.Items.Add(li);
             }
         }
         private void listViewSelectDrink_SelectedIndexChanged(object sender, EventArgs e)
@@ -778,6 +833,8 @@ namespace SomerenUI
             pnlOrderDrink.Hide();
             pnlReport.Hide();
             pnlManageActivitySupervisors.Hide();
+            pnlManageStudents.Hide();
+            pnlDrinkSupplies.Hide();
         }
 
         //        Start assignment 4 damisa
@@ -1044,6 +1101,8 @@ namespace SomerenUI
             pnlOrderDrink.Hide();
             pnlReport.Hide();
             pnlManageActivitySupervisors.Hide();
+            pnlManageStudents.Hide();
+            pnlDrinkSupplies.Hide();
             PnlActivityParticipants.Show(); // Show the panel for activity participants
             ShowActivityPanel(); // Prepare the activities panel for display
         }
@@ -1311,7 +1370,112 @@ namespace SomerenUI
             }
         }
 
-       
+
+
+
+
+
+
+
+        //      --------------------
+        //      Ayaz's Assignment 4
+
+        private readonly StudentService studentService = new StudentService();
+
+        private void LoadStudents()
+        {
+            listViewStudents2.Items.Clear();
+            foreach (Student student in studentService.GetAllStudents())
+            {
+                ListViewItem item = new ListViewItem(student.StudentNumber.ToString());
+                item.SubItems.Add(student.FirstName);
+                item.SubItems.Add(student.LastName);
+                item.SubItems.Add(student.TelephoneNumber);
+                item.SubItems.Add(student.Class);
+                item.SubItems.Add(student.RoomNumber.ToString());
+                listViewStudents2.Items.Add(item);
+            }
+        }
+
+        private void btnAddStudent_Click(object sender, EventArgs e)
+        {
+            UpdateStudentForm addForm = new UpdateStudentForm(null);
+            addForm.ShowDialog();
+            LoadStudents();
+        }
+
+        private void btnUpdateStudent_Click(object sender, EventArgs e)
+        {
+            if (listViewStudents2.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a student to update.");
+                return;
+            }
+
+            int studentNumber = int.Parse(listViewStudents2.SelectedItems[0].Text);
+            Student student = studentService.GetAllStudents().Find(s => s.StudentNumber == studentNumber);
+
+            UpdateStudentForm updateForm = new UpdateStudentForm(student);
+            updateForm.ShowDialog();
+            LoadStudents();
+        }
+
+        private void btnDeleteStudent_Click(object sender, EventArgs e)
+        {
+            if (listViewStudents2.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a student to delete.");
+                return;
+            }
+
+            int studentNumber = int.Parse(listViewStudents2.SelectedItems[0].Text);
+
+            Student student = studentService.GetAllStudents().Find(s => s.StudentNumber == studentNumber);
+
+            if (MessageBox.Show($"Are you sure you wish to remove {student.FirstName} {student.LastName}?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                studentService.DeleteStudent(studentNumber);
+                LoadStudents();
+            }
+        }
+        private void ShowStudentUpdatePanel()
+        {
+            // hide all other panels
+            pnlRooms.Hide();
+            pnlDashboard.Hide();
+            pnlOrderDrink.Hide();
+            pnlLecturers.Hide();
+            pnlDrinkSupplies.Hide();
+            pnlReport.Hide();
+            pnlManageActivitySupervisors.Hide();
+            pnlStudents.Hide();
+            PnlActivityParticipants.Hide();
+
+            pnlManageStudents.Show();
+
+            // Enable row selection and full row select in the ListView
+            listViewStudents2.FullRowSelect = true;
+            listViewStudents2.MultiSelect = false;
+
+            try
+            {
+                // get and display all students
+                List<Student> students = GetStudents();
+                DisplayStudents2(students);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while loading the students: " + e.Message);
+            }
+        }
+
+        private void updateStudentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowStudentUpdatePanel();
+        }
+
+        //      End of Ayaz's Assignment 4
+        //      --------------------
     }
 }
 

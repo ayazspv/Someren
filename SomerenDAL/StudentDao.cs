@@ -53,5 +53,51 @@ namespace SomerenDAL
             }
             return students;
         }
+
+        public void AddStudent(Student student)
+        {
+            string query = "INSERT INTO student ([Student Number], [First Name], [Last Name], [Telephone Number], [Class], [Room Number]) " +
+                           "VALUES (@StudentNumber, @FirstName, @LastName, @TelephoneNumber, @Class, @RoomNumber)";
+
+            SqlParameter[] sqlParameters = new SqlParameter[6]
+            {
+                new SqlParameter("@StudentNumber", student.StudentNumber),
+                new SqlParameter("@FirstName", student.FirstName),
+                new SqlParameter("@LastName", student.LastName),
+                new SqlParameter("@TelephoneNumber", student.TelephoneNumber),
+                new SqlParameter("@Class", student.Class),
+                new SqlParameter("@RoomNumber", student.RoomNumber)
+            };
+
+            ExecuteEditQuery(query, sqlParameters);
+        }
+        public void UpdateStudent(Student student)
+        {
+            string query = "UPDATE student SET [First Name] = @FirstName, [Last Name] = @LastName, " +
+                           "[Telephone Number] = @TelephoneNumber, [Class] = @Class, [Room Number] = @RoomNumber " +
+                           "WHERE [Student Number] = @StudentNumber";
+
+            SqlParameter[] sqlParameters = new SqlParameter[6]
+            {
+                new SqlParameter("@FirstName", student.FirstName),
+                new SqlParameter("@LastName", student.LastName),
+                new SqlParameter("@TelephoneNumber", student.TelephoneNumber),
+                new SqlParameter("@Class", student.Class),
+                new SqlParameter("@RoomNumber", student.RoomNumber),
+                new SqlParameter("@StudentNumber", student.StudentNumber)
+            };
+
+            ExecuteEditQuery(query, sqlParameters);
+        }
+        public void DeleteStudent(int studentNumber)
+        {
+            string query = "DELETE FROM student WHERE [Student Number] = @StudentNumber";
+            SqlParameter[] sqlParameters = new SqlParameter[1]
+            {
+                new SqlParameter("@StudentNumber", studentNumber)
+            };
+
+            ExecuteEditQuery(query, sqlParameters);
+        }
     }
 }
