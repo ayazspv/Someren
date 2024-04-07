@@ -24,5 +24,20 @@ namespace SomerenService
             List<Student> students = studentDao.GetByParticipantsNumber(activityNumber);
             return students;
         }
+
+        public void AddStudent(Student student)
+        {
+            studentDao.AddStudent(student);
+        }
+
+        public void UpdateStudent(Student student)
+        {
+            studentDao.UpdateStudent(student);
+        }
+
+        public void DeleteStudent(int studentNumber)
+        {
+            studentDao.DeleteStudent(studentNumber);
+        }
     }
 }
