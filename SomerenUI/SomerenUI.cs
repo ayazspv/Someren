@@ -706,13 +706,7 @@ namespace SomerenUI
         }
         private void reportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pnlDashboard.Hide();
-            pnlStudents.Hide();
-            pnlLecturers.Hide();
-            pnlRooms.Hide();
-            pnlDrinkSupplies.Hide();
-            pnlOrderDrink.Hide();
-            pnlManageActivitySupervisors.Hide();
+            HideAllPanelsOfApplication();
 
             pnlReport.Show();
         }
